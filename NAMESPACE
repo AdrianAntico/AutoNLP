@@ -3,6 +3,7 @@
 export(BuildBinary)
 export(CleanText)
 export(Install)
+export(LexicalDiversity)
 export(N_Grams)
 export(Readability)
 export(Sentiment)

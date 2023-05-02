@@ -17,6 +17,8 @@ R automated natural language processing
 
 ##### Readability()
 
+##### LexicalDiversity()
+
 
 ## Code Examples
 
@@ -34,7 +36,7 @@ R automated natural language processing
 dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 
 # Run Function
-Output <- CleanText(
+Output <- AutoNLP::CleanText(
   TrainData = dt,
   ValidationData = NULL,
   TestData = NULL,
@@ -68,7 +70,7 @@ Stuff here
 dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 
 # Run Function
-dt <- Sentiment(
+dt <- AutoNLP::Sentiment(
   dt,
   TextColumns = "Comment",
   Response = "numeric",
@@ -101,7 +103,7 @@ Stuff here
 dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 
 # Run Function
-dt <- N_Grams(
+dt <- AutoNLP::N_Grams(
   dt,
   dt_type = "raw",
   TextColumns = "Comment",
@@ -132,7 +134,7 @@ Stuff here
 dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 
 # Run Function
-Readability(
+dt <- AutoNLP::Readability(
   dt,
   TextColumns = "Comment",
   Measures = "Flesch",
@@ -153,3 +155,37 @@ Stuff here
 </p>
 </details>
 
+
+#### **LexicalDiversity()**
+
+<details><summary>Code Example</summary>
+<p>
+
+```r
+# Data
+dt <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
+
+# Run Function
+dt <- AutoNLP::LexicalDiversity(
+  dt,
+  TextColumns = "Comment",
+  Measures = "TTR",
+  RemoveSymbols = TRUE,
+  RemoveHyphens = TRUE,
+  RemovePunctuation = TRUE,
+  RemoveNumbers = TRUE,
+  LogBase = 10,
+  MATTR_Window = 100L,
+  MSTTR_Segment = 100L)
+```
+
+</p>
+</details>
+
+<details><summary>Function Description</summary>
+<p>
+
+Stuff here
+
+</p>
+</details>

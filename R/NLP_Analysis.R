@@ -344,3 +344,52 @@ Readability <- function(dt,
   }
   return(dt)
 }
+
+
+
+
+#' @title Readability
+#'
+#' @description Generate readability stats
+#'
+#' @author Adrian Antico
+#' @family NLP Stats
+#'
+#' @param dt data.table
+#' @param Measures Default is "TTR". Also available "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR", "MSTTR", "all"
+#' @param TextColumns Names of text columns to analyze
+#' @param RemoveHyphens Logical
+#' @param RemoveSymbols Logical
+#' @param RemovePunctuation Logical
+#' @param RemoveNumbers Logical
+#' @param MATTR_Window Numeric value defining the size of the moving average window for computation of the Moving-Average Type-Token Ration
+#' @param MSTTR_Segment Numeric value defining the size of each segment for the computation of the Mean Segmental Type-Token Ratio
+#'
+#' @export
+LexicalDiversity <- function(dt,
+                             TextColumns = NULL,
+                             Measures = "TTR",
+                             RemoveSymbols = TRUE,
+                             RemoveHyphens = TRUE,
+                             RemovePunctuation = TRUE,
+                             RemoveNumbers = TRUE,
+                             LogBase = 10,
+                             MATTR_Window = 100L,
+                             MSTTR_Segment = 100L) {
+
+  for(tc in TextColumns) {# tc = "Comment"
+    for(m in Measures) {# m = "TTR"
+      dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
+        quanteda::tokens(dt[[tc]]),
+        measure = m,
+        remove_numbers = RemoveNumbers,
+        remove_punct = RemovePunctuation,
+        remove_symbols = RemoveSymbols,
+        remove_hyphens = RemoveHyphens,
+        log.base = LogBase,
+        MATTR_window = MATTR_Window,
+        MSTTR_segment = MSTTR_Segment)[[2L]]]
+    }
+  }
+  return(dt)
+}
