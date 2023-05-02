@@ -19,7 +19,8 @@ Other NLP Stats:
 \code{\link{LexicalDiversity}()},
 \code{\link{N_Grams}()},
 \code{\link{Readability}()},
-\code{\link{Sentiment}()}
+\code{\link{Sentiment}()},
+\code{\link{TextColsSimilarity}()}
 }
 \author{
 Adrian Antico

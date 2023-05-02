@@ -175,6 +175,29 @@ CleanText <- function(TrainData = NULL,
   return(returnList)
 }
 
+#' @title TextSummary
+#'
+#' @description Generate text summary stats
+#'
+#' @author Adrian Antico
+#' @family NLP Stats
+#'
+#' @param dt data.table
+#' @param RemoveStats NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"
+#'
+#' @export
+TextSummary <- function() {
+  library(quanteda)
+  for(tc in TextColumns) {# tc = "Comment"
+    cols <- c("document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis")
+    dt[, paste0(tc, " ", cols) := quanteda.textstats::textstat_summary(quanteda::tokens(dt[[tc]]))]
+    if(length(RemoveStats) > 0L) {
+      data.table::set(dt, j = paste0(tc, " ", RemoveStats), value = NULL)
+    }
+  }
+  return(dt)
+}
+
 #' @title Sentiment
 #'
 #' @description Generate readability stats
@@ -395,26 +418,25 @@ LexicalDiversity <- function(dt,
   return(dt)
 }
 
-#' @title TextSummary
+#' @title TextColsSimilarity
 #'
-#' @description Generate text summary stats
+#' @description Generate similarity metrics between two text columns
 #'
 #' @author Adrian Antico
 #' @family NLP Stats
 #'
 #' @param dt data.table
-#' @param RemoveStats NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"
+#' @param TextCol1 Text column 1
+#' @param TextCol2 Text column 2
 #'
 #' @export
-TextSummary <- function() {
+TextColsSimilarity <- function(dt,
+                               TextCol1 = NULL,
+                               TextCol2 = NULL) {
+
   library(quanteda)
-  for(tc in TextColumns) {# tc = "Comment"
-    cols <- c("document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis")
-    dt[, paste0(tc, " ", cols) := quanteda.textstats::textstat_summary(quanteda::tokens(dt[[tc]]))]
-    if(length(RemoveStats) > 0L) {
-      data.table::set(dt, j = paste0(tc, " ", RemoveStats), value = NULL)
-    }
-  }
-  return(dt)
+  dt[, paste0(TextCol1, " Sim ", TextCol2) := quanteda.textstats::textstat_simil(
+    x = quanteda::dfm(quanteda::tokens(dt1[[TextCol1]])),
+    y = quanteda::dfm(quanteda::tokens(dt2[[TextCol2]])))]
 }
 

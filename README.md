@@ -21,6 +21,8 @@ R automated natural language processing
 
 ##### LexicalDiversity()
 
+##### TextColsSimilarity()
+
 ## Code Examples
 
 #### **CleanData()**
@@ -218,3 +220,35 @@ Stuff here
 
 </p>
 </details>
+
+
+
+#### **TextColsSimilarity()**
+
+<details><summary>Code Example</summary>
+<p>
+
+```r
+# Data
+dt <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
+dt2 <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
+dt[, Comment2 := dt2$Comment]
+
+# Run Function
+dt <- AutoNLP::TextColsSimilarity(
+  dt,
+  TextCol1 = "Comment",
+  TextCol2 = "Comment2")
+```
+
+</p>
+</details>
+
+<details><summary>Function Description</summary>
+<p>
+
+Stuff here
+
+</p>
+</details>
+
