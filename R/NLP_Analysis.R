@@ -200,6 +200,7 @@ Sentiment <- function(dt,
                       RemoveStopWords = TRUE,
                       Stemming = TRUE) {
 
+  library(quanteda)
   if(length(TextColumns) > 0L) {
     for(tc in TextColumns) {
       if(tolower(Response) == "binary") {
@@ -254,6 +255,8 @@ N_Grams <- function(dt,
                     N = 2,
                     StopWords = "en",
                     StopWordsSource = 'stopwords-iso') {
+
+  library(quanteda)
 
   ####################################### ----
   # StopWord Management                   ----
@@ -328,6 +331,7 @@ Readability <- function(dt,
                         MaxSentenceLength = 10000,
                         Intermediate = TRUE) {
 
+  library(quanteda)
   if(length(TextColumns) > 0L) {
     for(tc in TextColumns) {
       for(i in Measures) {
@@ -345,12 +349,9 @@ Readability <- function(dt,
   return(dt)
 }
 
-
-
-
-#' @title Readability
+#' @title LexicalDiversity
 #'
-#' @description Generate readability stats
+#' @description Generate lexical divrsity stats
 #'
 #' @author Adrian Antico
 #' @family NLP Stats
@@ -376,7 +377,7 @@ LexicalDiversity <- function(dt,
                              LogBase = 10,
                              MATTR_Window = 100L,
                              MSTTR_Segment = 100L) {
-
+  library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
     for(m in Measures) {# m = "TTR"
       dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
@@ -393,3 +394,27 @@ LexicalDiversity <- function(dt,
   }
   return(dt)
 }
+
+#' @title TextSummary
+#'
+#' @description Generate text summary stats
+#'
+#' @author Adrian Antico
+#' @family NLP Stats
+#'
+#' @param dt data.table
+#' @param RemoveStats NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"
+#'
+#' @export
+TextSummary <- function() {
+  library(quanteda)
+  for(tc in TextColumns) {# tc = "Comment"
+    cols <- c("document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis")
+    dt[, paste0(tc, " ", cols) := quanteda.textstats::textstat_summary(quanteda::tokens(dt[[tc]]))]
+    if(length(RemoveStats) > 0L) {
+      data.table::set(dt, j = paste0(tc, " ", RemoveStats), value = NULL)
+    }
+  }
+  return(dt)
+}
+

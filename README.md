@@ -11,6 +11,8 @@ R automated natural language processing
 
 ##### CleanData()
 
+##### TextSummary()
+
 ##### Sentiment()
 
 ##### NGram()
@@ -18,7 +20,6 @@ R automated natural language processing
 ##### Readability()
 
 ##### LexicalDiversity()
-
 
 ## Code Examples
 
@@ -58,7 +59,35 @@ Stuff here
 </p>
 </details>
 
+#### **TextSummary()**
 
+
+</p>
+</details>
+
+<details><summary>Code Example</summary>
+<p>
+
+```r
+# Data
+dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
+
+# Run Function
+dt <- AutoNLP::TextSummary(
+  TrainData = dt,
+  RemoveStats = NULL)
+```
+
+</p>
+</details>
+
+<details><summary>Function Description</summary>
+<p>
+
+Stuff here 
+
+</p>
+</details>
 
 #### **Sentiment()**
 

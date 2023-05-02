@@ -32,7 +32,8 @@ Generate n-gram columns from text columns
 Other NLP Stats: 
 \code{\link{LexicalDiversity}()},
 \code{\link{Readability}()},
-\code{\link{Sentiment}()}
+\code{\link{Sentiment}()},
+\code{\link{TextSummary}()}
 }
 \author{
 Adrian Antico

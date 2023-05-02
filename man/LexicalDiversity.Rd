@@ -2,7 +2,7 @@
 % Please edit documentation in R/NLP_Analysis.R
 \name{LexicalDiversity}
 \alias{LexicalDiversity}
-\title{Readability}
+\title{LexicalDiversity}
 \usage{
 LexicalDiversity(
   dt,
@@ -37,13 +37,14 @@ LexicalDiversity(
 \item{MSTTR_Segment}{Numeric value defining the size of each segment for the computation of the Mean Segmental Type-Token Ratio}
 }
 \description{
-Generate readability stats
+Generate lexical divrsity stats
 }
 \seealso{
 Other NLP Stats: 
 \code{\link{N_Grams}()},
 \code{\link{Readability}()},
-\code{\link{Sentiment}()}
+\code{\link{Sentiment}()},
+\code{\link{TextSummary}()}
 }
 \author{
 Adrian Antico

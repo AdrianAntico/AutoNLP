@@ -38,7 +38,8 @@ Generate readability stats
 Other NLP Stats: 
 \code{\link{LexicalDiversity}()},
 \code{\link{N_Grams}()},
-\code{\link{Readability}()}
+\code{\link{Readability}()},
+\code{\link{TextSummary}()}
 }
 \author{
 Adrian Antico
