@@ -428,15 +428,82 @@ LexicalDiversity <- function(dt,
 #' @param dt data.table
 #' @param TextCol1 Text column 1
 #' @param TextCol2 Text column 2
+#' @param Margin "documents" or "features"
+#' @param Method "correlation", "cosine", "jaccard", "ejaccard", "dice", "edice", "hamann", "simple matching"
+#'
+#' @examples
+#' \dontrun{
+#' dt <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt1 <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt[, Comment2 := dt1$Comment]
+#' }
 #'
 #' @export
 TextColsSimilarity <- function(dt,
                                TextCol1 = NULL,
-                               TextCol2 = NULL) {
+                               TextCol2 = NULL,
+                               Margin = "documents",
+                               Method = "cosine") {
 
   library(quanteda)
-  dt[, paste0(TextCol1, " Sim ", TextCol2) := quanteda.textstats::textstat_simil(
-    x = quanteda::dfm(quanteda::tokens(dt1[[TextCol1]])),
-    y = quanteda::dfm(quanteda::tokens(dt2[[TextCol2]])))]
+  for(i in Method) {
+    x <- quanteda.textstats::textstat_simil(
+      x = quanteda::dfm(quanteda::tokens(dt[[TextCol1]])),
+      y = quanteda::dfm(quanteda::tokens(dt[[TextCol2]])),
+      margin = Margin,
+      method = i)
+    gg <- data.table::as.data.table(x)
+    tc1 <- gg[, mean(get(i)), by = "document1"][order(document1)]
+    tc2 <- gg[, mean(get(i)), by = "document2"][order(document2)]
+    dt[, paste0(TextCol1, " sim ", TextCol2, " ", i) := tc1$V1]
+    dt[, paste0(TextCol2, " sim ", TextCol1, " ", i) := tc2$V1]
+  }
+  return(dt)
+}
+
+#' @title TextColsDistance
+#'
+#' @description Generate distance metrics between two text columns
+#'
+#' @author Adrian Antico
+#' @family NLP Stats
+#'
+#' @param dt data.table
+#' @param TextCol1 Text column 1
+#' @param TextCol2 Text column 2
+#' @param Margin "documents" or "features"
+#' @param DistanceMeasure "euclidean", "manhattan", "maximum", "canberra", "minkowski"
+#' @param MinkowskiPower Default 2. Only used when DistanceMeasure is "minkowski"
+#'
+#'
+#' @examples
+#' \dontrun{
+#' dt <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt1 <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt[, Comment2 := dt1$Comment]
+#' }
+#'
+#' @export
+TextColsDistance <- function(dt,
+                             TextCol1 = NULL,
+                             TextCol2 = NULL,
+                             Margin = "documents",
+                             DistanceMeasure = "euclidean",
+                             MinkowskiPower = 2) {
+
+  library(quanteda)
+  for(i in DistanceMeasure) {
+    x <- quanteda.textstats::textstat_dist(
+      x = quanteda::dfm(quanteda::tokens(dt[[TextCol1]])),
+      y = quanteda::dfm(quanteda::tokens(dt[[TextCol2]])),
+      margin = Margin,
+      method = i)
+    gg <- data.table::as.data.table(x)
+    tc1 <- gg[, mean(get(i)), by = "document1"][order(document1)]
+    tc2 <- gg[, mean(get(i)), by = "document2"][order(document2)]
+    dt[, paste0(TextCol1, " dist ", TextCol2, " ", i) := tc1$V1]
+    dt[, paste0(TextCol2, " dist ", TextCol1, " ", i) := tc2$V1]
+  }
+  return(dt)
 }
 

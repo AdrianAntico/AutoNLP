@@ -39,6 +39,7 @@ Other NLP Stats:
 \code{\link{LexicalDiversity}()},
 \code{\link{N_Grams}()},
 \code{\link{Readability}()},
+\code{\link{TextColsDistance}()},
 \code{\link{TextColsSimilarity}()},
 \code{\link{TextSummary}()}
 }
