@@ -400,11 +400,14 @@ LexicalDiversity <- function(dt,
                              LogBase = 10,
                              MATTR_Window = 100L,
                              MSTTR_Segment = 100L) {
+
+  if(dt[,.N] > SampleSize) dt1 <- dt[seq_len(MaxSampleSize)] else dt1 <- data.table::copy(dt)
+
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
     for(m in Measures) {# m = "TTR"
-      dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
-        quanteda::tokens(dt[[tc]]),
+      dt1[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
+        quanteda::tokens(dt1[[tc]]),
         measure = m,
         remove_numbers = RemoveNumbers,
         remove_punct = RemovePunctuation,
@@ -415,7 +418,7 @@ LexicalDiversity <- function(dt,
         MSTTR_segment = MSTTR_Segment)[[2L]]]
     }
   }
-  return(dt)
+  return(dt1)
 }
 
 #' @title TextColsSimilarity
@@ -436,6 +439,8 @@ LexicalDiversity <- function(dt,
 #' dt <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
 #' dt1 <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
 #' dt[, Comment2 := dt1$Comment]
+#' TextCol1 <- "Comment"
+#' TextCol2 <- "Comment2"
 #' }
 #'
 #' @export
@@ -443,22 +448,25 @@ TextColsSimilarity <- function(dt,
                                TextCol1 = NULL,
                                TextCol2 = NULL,
                                Margin = "documents",
-                               Method = "cosine") {
+                               Method = "cosine",
+                               MaxSampleSize = 10000) {
+
+  if(dt[,.N] > SampleSize) dt1 <- dt[seq_len(MaxSampleSize)] else dt1 <- data.table::copy(dt)
 
   library(quanteda)
   for(i in Method) {
     x <- quanteda.textstats::textstat_simil(
-      x = quanteda::dfm(quanteda::tokens(dt[[TextCol1]])),
-      y = quanteda::dfm(quanteda::tokens(dt[[TextCol2]])),
+      x = quanteda::dfm(quanteda::tokens(dt1[[TextCol1]])),
+      y = quanteda::dfm(quanteda::tokens(dt1[[TextCol2]])),
       margin = Margin,
       method = i)
     gg <- data.table::as.data.table(x)
     tc1 <- gg[, mean(get(i)), by = "document1"][order(document1)]
     tc2 <- gg[, mean(get(i)), by = "document2"][order(document2)]
-    dt[, paste0(TextCol1, " sim ", TextCol2, " ", i) := tc1$V1]
-    dt[, paste0(TextCol2, " sim ", TextCol1, " ", i) := tc2$V1]
+    dt1[, paste0(TextCol1, " sim ", TextCol2, " ", i) := tc1$V1]
+    dt1[, paste0(TextCol2, " sim ", TextCol1, " ", i) := tc2$V1]
   }
-  return(dt)
+  return(dt1)
 }
 
 #' @title TextColsDistance
@@ -474,13 +482,15 @@ TextColsSimilarity <- function(dt,
 #' @param Margin "documents" or "features"
 #' @param DistanceMeasure "euclidean", "manhattan", "maximum", "canberra", "minkowski"
 #' @param MinkowskiPower Default 2. Only used when DistanceMeasure is "minkowski"
-#'
+#' @param MaxSampleSize Default 10000
 #'
 #' @examples
 #' \dontrun{
-#' dt <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
-#' dt1 <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt <- AutoQuant::FakeDataGenerator(N=10000, AddComment = TRUE)
+#' dt1 <- AutoQuant::FakeDataGenerator(N=10000, AddComment = TRUE)
 #' dt[, Comment2 := dt1$Comment]
+#' TextCol1 <- "Comment"
+#' TextCol2 <- "Comment2"
 #' }
 #'
 #' @export
@@ -489,7 +499,8 @@ TextColsDistance <- function(dt,
                              TextCol2 = NULL,
                              Margin = "documents",
                              DistanceMeasure = "euclidean",
-                             MinkowskiPower = 2) {
+                             MinkowskiPower = 2,
+                             MaxSampleSize = 10000) {
 
   library(quanteda)
   for(i in DistanceMeasure) {
