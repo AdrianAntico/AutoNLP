@@ -7,6 +7,21 @@
 
 R automated natural language processing
 
+## Install AutoNLP
+ 
+```r
+install.packages('bit64')
+install.packages('data.table')
+install.packages('keras')
+install.packages('tidytext')
+install.packages('tibble')
+install.packages('stopwords')
+install.packages('SentimentAnalysis')
+install.packages('quanteda')
+install.packages('quanteda.textstats')
+devtools::install_github("AdrianAntico/AutoNLP", upgrade = FALSE)
+```
+
 ## Functions
 
 ##### CleanData()
