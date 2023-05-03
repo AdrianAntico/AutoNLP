@@ -2,6 +2,7 @@
 
 export(BuildBinary)
 export(CleanText)
+export(FakeDataGenerator)
 export(Install)
 export(LexicalDiversity)
 export(N_Grams)

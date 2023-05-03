@@ -30,29 +30,6 @@
 #' @param StopWords Default "none". For stopwords package usage supply language code e.g. "en" for english https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes. Otherwise, supply a character vector of stopwords. If you want to supply a modifed version of what's returned from the stopwords package, run this and modify as you wish, stopwords::stopwords(language = 'en', source = 'stopwords-iso')
 #' @param StopWordsSource Default "stopwords-iso" and only applies if you supply a language code in the StopWords parameter. Other options include "snowball", "stopwords-iso", "misc", "smart", "marimo", "ancient", "nltk", "perseus".
 #'
-#' @examples
-#' \dontrun {
-#'
-#' Output <- AutoQuant::PostGRE_Query(
-#'   Query = paste0("SELECT * FROM ", shQuote('rawdata')),
-#'   Host = 'localhost',
-#'   CloseConnection = FALSE,
-#'   DBName = 'RemixAutoML',
-#'   User = 'postgres',
-#'   Port = 5432,
-#'   Password = 'Aa1028#@')
-#' rawdata <- Output$data
-#'
-#' output <- CleanText(
-#'   TrainData = rawdata,
-#'   ValidationData = NULL,
-#'   TestData = NULL,
-#'   TextColumn = "reviewText",
-#'   MergeColumns = "restoId",
-#'   RemovePunctuation = TRUE,
-#'   StopWords = "en",
-#'   StopWordsSource = 'stopwords-iso')
-#' }
 #' @export
 CleanText <- function(TrainData = NULL,
                       ValidationData = NULL,

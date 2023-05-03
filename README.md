@@ -209,7 +209,7 @@ Stuff here
 
 ```r
 # Data
-dt <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
+dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 
 # Run Function
 dt <- AutoNLP::LexicalDiversity(
@@ -245,8 +245,8 @@ Stuff here
 
 ```r
 # Data
-dt <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
-dt2 <- AutoQuant::FakeDataGenerator(N = 1000, AddComment = TRUE)
+dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
+dt2 <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 dt[, Comment2 := dt2$Comment]
 
 # Run Function

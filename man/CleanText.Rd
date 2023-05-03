@@ -35,30 +35,6 @@ CleanText(
 \description{
 Remove punctuation and stopwords
 }
-\examples{
-\dontrun {
-
-Output <- AutoQuant::PostGRE_Query(
-  Query = paste0("SELECT * FROM ", shQuote('rawdata')),
-  Host = 'localhost',
-  CloseConnection = FALSE,
-  DBName = 'RemixAutoML',
-  User = 'postgres',
-  Port = 5432,
-  Password = 'Aa1028#@')
-rawdata <- Output$data
-
-output <- CleanText(
-  TrainData = rawdata,
-  ValidationData = NULL,
-  TestData = NULL,
-  TextColumn = "reviewText",
-  MergeColumns = "restoId",
-  RemovePunctuation = TRUE,
-  StopWords = "en",
-  StopWordsSource = 'stopwords-iso')
-}
-}
 \author{
 Adrian Antico
 }
