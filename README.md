@@ -5,7 +5,7 @@
 
 # AutoNLP
 
-R automated natural language processing
+R automated natural language processing. The intent is to abstract away the nuances of running various functions and to enable users to generate output (or new columns) on any number of text columns you have in a dataset. I'm not sure yet how this package will evolve but there are a lot of possible directions. 
 
 ## Install AutoNLP
  
