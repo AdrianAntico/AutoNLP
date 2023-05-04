@@ -330,8 +330,8 @@ N_Grams <- function(dt,
 #' @author Adrian Antico
 #' @family NLP Stats
 #'
+#' @param Measures Default is "Flesch". Also available "ARI", "Bormuth.MC", "Bormuth.GP", "Coleman", "Coleman.C2", "Coleman.Liau.ECP", "Coleman.Liau.grade", "Coleman.Liau.short", "Dale.Chall", "Danielson.Bryan", "Dickes.Steiwer", "DRP", "ELF", "Farr.Jenkins.Paterson", "Flesch.PSK", "Flesch.Kincaid", "FOG", "FOG.PSK", "FOG.NRI", "FORCAST", "Fucks", "Linsear.Write", "LIW", "nWS", "nWS.2", "nWS.3", "nWS4", "RIX", "Scrabble", "SMOG", "SMOG.C", "SMOG.simple", "SMOG.de", "Spache", "Spache.old", "Strain", "Traenkle.Bailer", "Wheeler.Smith", "meanSentenceLength", "meanWordSyllables"
 #' @param dt data.table
-#' @param Measures Default is "Flesch". Also available "ARI", "Bormuth.MC", "Bormuth.GP", "Coleman", "Coleman.C2", "Coleman.Liau.ECP", "Coleman.Liau.grade", "Coleman.Liau.short", "Dale.Chall", "Danielson.Bryan", "Dickes.Steiwer", "DRP", "ELF", "Farr.Jenkins.Paterson", "Flesch.PSK", "Flesch.Kincaid", 'FOG", "FOG.PSK", "FOG.NRI", "FORCAST", "Fucks", "Linsear.Write", "LIW", "nWS", "nWS.2", "nWS.3", "nWS4", "RIX", "Scrabble", "SMOG", "SMOG.C", "SMOG.simple", "SMOG.de", "Spache", "Spache.old", "Strain", "Traenkle.Bailer", "Wheeler.Smith", "meanSentenceLength", "meanWordSyllables"
 #' @param TextColumns Names of text columns to analyze
 #' @param RemoveHyphens TRUE. FALSE to not remove them
 #' @param MinSentenceLength Defautl 1
