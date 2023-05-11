@@ -9,6 +9,8 @@ TextSummary(dt = NULL, TextColumns = NULL, RemoveStats = NULL)
 \arguments{
 \item{dt}{data.table}
 
+\item{TextColumns}{text column names}
+
 \item{RemoveStats}{NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"}
 }
 \description{

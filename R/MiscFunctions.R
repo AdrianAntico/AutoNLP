@@ -353,9 +353,9 @@ FakeDataGenerator <- function(Correlation = 0.70,
 
   # Comment data
   if(AddComment) {
-    a <- c('Hello', 'Hi', 'Howdy')
-    b <- c('really like', 'absolutely adore', 'sucks ass')
-    c <- c('noload', 'download', 'upload')
+    a <- c('Hello', 'Hi', 'Howdy', 'Yo!@!', "8675309")
+    b <- c('really like', 'absolutely adore', 'best birthday ever!')
+    c <- c('noload', 'download', 'upload', 'freebie', 'vote with dollars')
     N1 <- 1/length(a)
     N2 <- 1/length(b)
     N3 <- 1/length(c)

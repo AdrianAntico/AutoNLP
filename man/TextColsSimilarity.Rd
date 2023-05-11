@@ -9,8 +9,7 @@ TextColsSimilarity(
   TextCol1 = NULL,
   TextCol2 = NULL,
   Margin = "documents",
-  Method = "cosine",
-  MaxSampleSize = 10000
+  Method = "cosine"
 )
 }
 \arguments{

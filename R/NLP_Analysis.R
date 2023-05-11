@@ -1,19 +1,3 @@
-# AutoNLP is a package for quickly creating high quality visualizations under a common and easy api.
-# Copyright (C) <year>  <name of author>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as
-# published by the Free Software Foundation, either version 3 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 #' @title CleanText
 #'
 #' @description Remove punctuation and stopwords
@@ -30,6 +14,29 @@
 #' @param StopWords Default "none". For stopwords package usage supply language code e.g. "en" for english https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes. Otherwise, supply a character vector of stopwords. If you want to supply a modifed version of what's returned from the stopwords package, run this and modify as you wish, stopwords::stopwords(language = 'en', source = 'stopwords-iso')
 #' @param StopWordsSource Default "stopwords-iso" and only applies if you supply a language code in the StopWords parameter. Other options include "snowball", "stopwords-iso", "misc", "smart", "marimo", "ancient", "nltk", "perseus".
 #'
+#' @examples
+#' \dontrun {
+#'
+#' Output <- AutoQuant::PostGRE_Query(
+#'   Query = paste0("SELECT * FROM ", shQuote('rawdata')),
+#'   Host = 'localhost',
+#'   CloseConnection = FALSE,
+#'   DBName = 'RemixAutoML',
+#'   User = 'postgres',
+#'   Port = 5432,
+#'   Password = 'Aa1028#@')
+#' rawdata <- Output$data
+#'
+#' output <- CleanText(
+#'   TrainData = rawdata,
+#'   ValidationData = NULL,
+#'   TestData = NULL,
+#'   TextColumn = "reviewText",
+#'   MergeColumns = "restoId",
+#'   RemovePunctuation = TRUE,
+#'   StopWords = "en",
+#'   StopWordsSource = 'stopwords-iso')
+#' }
 #' @export
 CleanText <- function(TrainData = NULL,
                       ValidationData = NULL,
@@ -176,6 +183,7 @@ CleanText <- function(TrainData = NULL,
 #' @family NLP Stats
 #'
 #' @param dt data.table
+#' @param TextColumns text column names
 #' @param RemoveStats NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"
 #'
 #' @export
@@ -332,8 +340,8 @@ N_Grams <- function(dt,
 #' @author Adrian Antico
 #' @family NLP Stats
 #'
-#' @param Measures Default is "Flesch". Also available "ARI", "Bormuth.MC", "Bormuth.GP", "Coleman", "Coleman.C2", "Coleman.Liau.ECP", "Coleman.Liau.grade", "Coleman.Liau.short", "Dale.Chall", "Danielson.Bryan", "Dickes.Steiwer", "DRP", "ELF", "Farr.Jenkins.Paterson", "Flesch.PSK", "Flesch.Kincaid", "FOG", "FOG.PSK", "FOG.NRI", "FORCAST", "Fucks", "Linsear.Write", "LIW", "nWS", "nWS.2", "nWS.3", "nWS4", "RIX", "Scrabble", "SMOG", "SMOG.C", "SMOG.simple", "SMOG.de", "Spache", "Spache.old", "Strain", "Traenkle.Bailer", "Wheeler.Smith", "meanSentenceLength", "meanWordSyllables"
 #' @param dt data.table
+#' @param Measures Default is "Flesch". Also available "ARI", "Bormuth.MC", "Bormuth.GP", "Coleman", "Coleman.C2", "Coleman.Liau.ECP", "Coleman.Liau.grade", "Coleman.Liau.short", "Dale.Chall", "Danielson.Bryan", "Dickes.Steiwer", "DRP", "ELF", "Farr.Jenkins.Paterson", "Flesch.PSK", "Flesch.Kincaid", 'FOG", "FOG.PSK", "FOG.NRI", "FORCAST", "Fucks", "Linsear.Write", "LIW", "nWS", "nWS.2", "nWS.3", "nWS4", "RIX", "Scrabble", "SMOG", "SMOG.C", "SMOG.simple", "SMOG.de", "Spache", "Spache.old", "Strain", "Traenkle.Bailer", "Wheeler.Smith", "meanSentenceLength", "meanWordSyllables"
 #' @param TextColumns Names of text columns to analyze
 #' @param RemoveHyphens TRUE. FALSE to not remove them
 #' @param MinSentenceLength Defautl 1
@@ -395,14 +403,11 @@ LexicalDiversity <- function(dt,
                              LogBase = 10,
                              MATTR_Window = 100L,
                              MSTTR_Segment = 100L) {
-
-  if(dt[,.N] > SampleSize) dt1 <- dt[seq_len(MaxSampleSize)] else dt1 <- data.table::copy(dt)
-
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
     for(m in Measures) {# m = "TTR"
-      dt1[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
-        quanteda::tokens(dt1[[tc]]),
+      dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
+        quanteda::tokens(dt[[tc]]),
         measure = m,
         remove_numbers = RemoveNumbers,
         remove_punct = RemovePunctuation,
@@ -413,7 +418,7 @@ LexicalDiversity <- function(dt,
         MSTTR_segment = MSTTR_Segment)[[2L]]]
     }
   }
-  return(dt1)
+  return(dt)
 }
 
 #' @title TextColsSimilarity
@@ -443,25 +448,22 @@ TextColsSimilarity <- function(dt,
                                TextCol1 = NULL,
                                TextCol2 = NULL,
                                Margin = "documents",
-                               Method = "cosine",
-                               MaxSampleSize = 10000) {
-
-  if(dt[,.N] > SampleSize) dt1 <- dt[seq_len(MaxSampleSize)] else dt1 <- data.table::copy(dt)
+                               Method = "cosine") {
 
   library(quanteda)
   for(i in Method) {
     x <- quanteda.textstats::textstat_simil(
-      x = quanteda::dfm(quanteda::tokens(dt1[[TextCol1]])),
-      y = quanteda::dfm(quanteda::tokens(dt1[[TextCol2]])),
+      x = quanteda::dfm(quanteda::tokens(dt[[TextCol1]])),
+      y = quanteda::dfm(quanteda::tokens(dt[[TextCol2]])),
       margin = Margin,
       method = i)
     gg <- data.table::as.data.table(x)
     tc1 <- gg[, mean(get(i)), by = "document1"][order(document1)]
     tc2 <- gg[, mean(get(i)), by = "document2"][order(document2)]
-    dt1[, paste0(TextCol1, " sim ", TextCol2, " ", i) := tc1$V1]
-    dt1[, paste0(TextCol2, " sim ", TextCol1, " ", i) := tc2$V1]
+    dt[, paste0(TextCol1, " sim ", TextCol2, " ", i) := tc1$V1]
+    dt[, paste0(TextCol2, " sim ", TextCol1, " ", i) := tc2$V1]
   }
-  return(dt1)
+  return(dt)
 }
 
 #' @title TextColsDistance
@@ -477,12 +479,12 @@ TextColsSimilarity <- function(dt,
 #' @param Margin "documents" or "features"
 #' @param DistanceMeasure "euclidean", "manhattan", "maximum", "canberra", "minkowski"
 #' @param MinkowskiPower Default 2. Only used when DistanceMeasure is "minkowski"
-#' @param MaxSampleSize Default 10000
+#'
 #'
 #' @examples
 #' \dontrun{
-#' dt <- AutoQuant::FakeDataGenerator(N=10000, AddComment = TRUE)
-#' dt1 <- AutoQuant::FakeDataGenerator(N=10000, AddComment = TRUE)
+#' dt <- AutoQuant::FakeDataGenerator(N=100000, AddComment = TRUE)
+#' dt1 <- AutoQuant::FakeDataGenerator(N=100000, AddComment = TRUE)
 #' dt[, Comment2 := dt1$Comment]
 #' TextCol1 <- "Comment"
 #' TextCol2 <- "Comment2"
@@ -494,11 +496,10 @@ TextColsDistance <- function(dt,
                              TextCol2 = NULL,
                              Margin = "documents",
                              DistanceMeasure = "euclidean",
-                             MinkowskiPower = 2,
-                             MaxSampleSize = 10000) {
+                             MinkowskiPower = 2) {
 
   library(quanteda)
-  for(i in DistanceMeasure) {
+  for(i in DistanceMeasure) {# i = "euclidean"
     x <- quanteda.textstats::textstat_dist(
       x = quanteda::dfm(quanteda::tokens(dt[[TextCol1]])),
       y = quanteda::dfm(quanteda::tokens(dt[[TextCol2]])),
