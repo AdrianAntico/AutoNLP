@@ -179,7 +179,8 @@ CleanText <- function(TrainData = NULL,
 #' @param RemoveStats NULL. If you want any metrics suppressed, supply as a character vector. Metrics include, "document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis"
 #'
 #' @export
-TextSummary <- function() {
+TextSummary <- function(dt = NULL,
+                        RemoveStats = NULL) {
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
     cols <- c("document", "chars", "sents", "tokens", "types", "puncts", "numbers", "symbols", "urls", "tags", "emojis")
