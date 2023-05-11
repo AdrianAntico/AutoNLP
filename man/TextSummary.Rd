@@ -4,7 +4,7 @@
 \alias{TextSummary}
 \title{TextSummary}
 \usage{
-TextSummary(dt = NULL, RemoveStats = NULL)
+TextSummary(dt = NULL, TextColumns = NULL, RemoveStats = NULL)
 }
 \arguments{
 \item{dt}{data.table}

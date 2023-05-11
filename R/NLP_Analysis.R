@@ -180,6 +180,7 @@ CleanText <- function(TrainData = NULL,
 #'
 #' @export
 TextSummary <- function(dt = NULL,
+                        TextColumns = NULL,
                         RemoveStats = NULL) {
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"

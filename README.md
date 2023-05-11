@@ -92,6 +92,7 @@ dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
 # Run Function
 dt <- AutoNLP::TextSummary(
   dt = dt,
+  TextColumns = "Comment",
   RemoveStats = NULL)
 ```
 
