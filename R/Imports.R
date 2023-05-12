@@ -1,4 +1,4 @@
-# AutoNLP is a package for quickly creating high quality visualizations under a common and easy api.
+# AutoNLP is a package for quickly running NLP tasks under a common and easy api.
 # Copyright (C) <year>  <name of author>
 #
 # This program is free software: you can redistribute it and/or modify
