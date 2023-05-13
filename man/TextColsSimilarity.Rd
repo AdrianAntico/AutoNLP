@@ -9,7 +9,8 @@ TextColsSimilarity(
   TextCol1 = NULL,
   TextCol2 = NULL,
   Margin = "documents",
-  Method = "cosine"
+  Method = "cosine",
+  MaxSampleSize = 10000
 )
 }
 \arguments{
@@ -28,8 +29,8 @@ Generate similarity metrics between two text columns
 }
 \examples{
 \dontrun{
-dt <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
-dt1 <- AutoQuant::FakeDataGenerator(N=1000, AddComment = TRUE)
+dt <- AutoNLP::FakeDataGenerator(N=1000, AddComment = TRUE)
+dt1 <- AutoNLP::FakeDataGenerator(N=1000, AddComment = TRUE)
 dt[, Comment2 := dt1$Comment]
 TextCol1 <- "Comment"
 TextCol2 <- "Comment2"

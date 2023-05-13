@@ -10,7 +10,8 @@ TextColsDistance(
   TextCol2 = NULL,
   Margin = "documents",
   DistanceMeasure = "euclidean",
-  MinkowskiPower = 2
+  MinkowskiPower = 2,
+  MaxSampleSize = 10000
 )
 }
 \arguments{
@@ -25,14 +26,16 @@ TextColsDistance(
 \item{DistanceMeasure}{"euclidean", "manhattan", "maximum", "canberra", "minkowski"}
 
 \item{MinkowskiPower}{Default 2. Only used when DistanceMeasure is "minkowski"}
+
+\item{MaxSampleSize}{Default 10000}
 }
 \description{
 Generate distance metrics between two text columns
 }
 \examples{
 \dontrun{
-dt <- AutoQuant::FakeDataGenerator(N=100000, AddComment = TRUE)
-dt1 <- AutoQuant::FakeDataGenerator(N=100000, AddComment = TRUE)
+dt <- AutoNLP::FakeDataGenerator(N=10000, AddComment = TRUE)
+dt1 <- AutoNLP::FakeDataGenerator(N=10000, AddComment = TRUE)
 dt[, Comment2 := dt1$Comment]
 TextCol1 <- "Comment"
 TextCol2 <- "Comment2"

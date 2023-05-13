@@ -432,8 +432,8 @@ LexicalDiversity <- function(dt,
 #'
 #' @examples
 #' \dontrun{
-#' dt <- FakeDataGenerator(N=1000, AddComment = TRUE)
-#' dt1 <- FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt <- AutoNLP::FakeDataGenerator(N=1000, AddComment = TRUE)
+#' dt1 <- AutoNLP::FakeDataGenerator(N=1000, AddComment = TRUE)
 #' dt[, Comment2 := dt1$Comment]
 #' TextCol1 <- "Comment"
 #' TextCol2 <- "Comment2"
@@ -482,8 +482,8 @@ TextColsSimilarity <- function(dt,
 #'
 #' @examples
 #' \dontrun{
-#' dt <- FakeDataGenerator(N=10000, AddComment = TRUE)
-#' dt1 <- FakeDataGenerator(N=10000, AddComment = TRUE)
+#' dt <- AutoNLP::FakeDataGenerator(N=10000, AddComment = TRUE)
+#' dt1 <- AutoNLP::FakeDataGenerator(N=10000, AddComment = TRUE)
 #' dt[, Comment2 := dt1$Comment]
 #' TextCol1 <- "Comment"
 #' TextCol2 <- "Comment2"
