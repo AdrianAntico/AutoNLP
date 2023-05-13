@@ -218,11 +218,12 @@ Sentiment <- function(dt,
                       RemoveStopWords = TRUE,
                       Stemming = TRUE) {
 
-  library(quanteda)
+  library(SentimentAnalysis)
   if(length(TextColumns) > 0L) {
-    for(tc in TextColumns) {
+    cols <- c("WordCount", "SentimentGI", "NegativityGI", "PositivityGI", "SentimentHE", "NegativityHE", "PositivityHE", "SentimentLM", "NegativityLM", "PositivityLM", "RatioUncertaintyLM", "SentimentQDAP", "NegativityQDAP", "PositivityQDAP")
+    for(tc in TextColumns) {# tc = "Comment"
       if(tolower(Response) == "binary") {
-        dt[, paste0(tc, " Sentiment") := as.character(SentimentAnalysis::convertToBinaryResponse(SentimentAnalysis::analyzeSentiment(
+        dt[, paste0(tc, cols) := as.character(SentimentAnalysis::convertToBinaryResponse(SentimentAnalysis::analyzeSentiment(
           x = dt[[tc]],
           language = Language,
           aggregate = CombineTextGroupVar,
@@ -230,7 +231,7 @@ Sentiment <- function(dt,
           stemming = Stemming
         )))]
       } else if(tolower(Response) == "direction") {
-        dt[, paste0(tc, " Sentiment") := as.character(SentimentAnalysis::convertToDirection(SentimentAnalysis::analyzeSentiment(
+        dt[, paste0(tc, cols) := as.character(SentimentAnalysis::convertToDirection(SentimentAnalysis::analyzeSentiment(
           x = dt[[tc]],
           language = Language,
           aggregate = CombineTextGroupVar,
@@ -238,7 +239,7 @@ Sentiment <- function(dt,
           stemming = Stemming
         )))]
       } else if(tolower(Response) == "numeric") {
-        dt[, paste0(tc, " Sentiment") := SentimentAnalysis::analyzeSentiment(
+        dt[, paste0(tc, cols) := SentimentAnalysis::analyzeSentiment(
           x = dt[[tc]],
           language = Language,
           aggregate = CombineTextGroupVar,
