@@ -181,13 +181,11 @@ LexicalDiversity <- function(dt,
                              MATTR_Window = 100L,
                              MSTTR_Segment = 100L) {
 
-  if(dt[,.N] > SampleSize) dt1 <- dt[seq_len(MaxSampleSize)] else dt1 <- data.table::copy(dt)
-
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
-    for(m in Measures) {# m = "TTR"
-      dt1[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
-        quanteda::tokens(dt1[[tc]]),
+    for(m in Measures) {# m = "CTTR"
+      dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
+        quanteda::tokens(dt[[tc]]),
         measure = m,
         remove_numbers = RemoveNumbers,
         remove_punct = RemovePunctuation,
@@ -198,7 +196,7 @@ LexicalDiversity <- function(dt,
         MSTTR_segment = MSTTR_Segment)[[2L]]]
     }
   }
-  return(dt1)
+  return(dt)
 }
 
 #' @title TextColsSimilarity
