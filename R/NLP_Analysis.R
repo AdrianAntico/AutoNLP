@@ -352,16 +352,27 @@ Readability <- function(dt,
 
   library(quanteda)
   if(length(TextColumns) > 0L) {
-    for(tc in TextColumns) {
+    for(tc in TextColumns) {# tc = "Comment"
       for(i in Measures) {
-        dt[, paste0(i, " Readability") := quanteda.textstats::textstat_readability(
-          dt[[tc]],
-          measure = i,
-          remove_hyphens = RemoveHyphens,
-          min_sentence_length = MinSentenceLength,
-          max_sentence_length = MaxSentenceLength,
-          intermediate = Intermediate
-        )[[2L]]]
+        if(Intermediate) {
+          dt <- cbind(dt, quanteda.textstats::textstat_readability(
+            dt[[tc]],
+            measure = i,
+            remove_hyphens = RemoveHyphens,
+            min_sentence_length = MinSentenceLength,
+            max_sentence_length = MaxSentenceLength,
+            intermediate = Intermediate
+          ))
+        } else {
+          dt[, paste0(i, " Readability") := quanteda.textstats::textstat_readability(
+            dt[[tc]],
+            measure = i,
+            remove_hyphens = RemoveHyphens,
+            min_sentence_length = MinSentenceLength,
+            max_sentence_length = MaxSentenceLength,
+            intermediate = Intermediate
+          )[[2L]]]
+        }
       }
     }
   }
