@@ -23,8 +23,6 @@ devtools::install_github("AdrianAntico/AutoNLP", upgrade = FALSE)
 
 ## Functions
 
-##### CleanData()
-
 ##### TextSummary()
 
 ##### Sentiment()
@@ -36,42 +34,6 @@ devtools::install_github("AdrianAntico/AutoNLP", upgrade = FALSE)
 ##### TextColsSimilarity()
 
 ## Code Examples
-
-#### **CleanData()**
-
-
-</p>
-</details>
-
-<details><summary>Code Example</summary>
-<p>
-
-```r
-# Data
-dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
-
-# Run Function
-Output <- AutoNLP::CleanText(
-  TrainData = dt,
-  ValidationData = NULL,
-  TestData = NULL,
-  TextColumn = "Comment",
-  MergeColumns = "Factor_1",
-  RemovePunctuation = TRUE,
-  StopWords = "en",
-  StopWordsSource = 'stopwords-iso')
-```
-
-</p>
-</details>
-
-<details><summary>Function Description</summary>
-<p>
-
-Stuff here 
-
-</p>
-</details>
 
 #### **TextSummary()**
 
