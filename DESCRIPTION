@@ -12,7 +12,7 @@ License: AGPL-3.0 license
 URL: https://github.com/AdrianAntico/AutoNLP
 BugReports: https://github.com/AdrianAntico/AutoNLP/issues
 Depends: R (>= 4.2.0)
-Imports: bit64, data.table, keras, tidytext, tibble, stopwords, SentimentAnalysis, quanteda, quanteda.textstats
+Imports: bit64, data.table, tidytext, tibble, stopwords, SentimentAnalysis, quanteda, quanteda.textstats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 Contact: Adrian Antico

@@ -12,7 +12,6 @@ R automated natural language processing. The intent is to abstract away the nuan
 ```r
 install.packages('bit64')
 install.packages('data.table')
-install.packages('keras')
 install.packages('tidytext')
 install.packages('tibble')
 install.packages('stopwords')
