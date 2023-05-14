@@ -306,7 +306,7 @@ N_Grams <- function(dt,
   }
 
   # NGrams
-  ngrams <- as_tibble(ngrams)
+  ngrams <- tibble::as_tibble(ngrams)
   ngrams <- data.table::setDT(tidytext::unnest_tokens(
     tbl = ngrams,
     output = "ngram",
