@@ -41,7 +41,6 @@ Generate lexical divrsity stats
 }
 \seealso{
 Other NLP Stats: 
-\code{\link{N_Grams}()},
 \code{\link{Readability}()},
 \code{\link{Sentiment}()},
 \code{\link{TextColsDistance}()},

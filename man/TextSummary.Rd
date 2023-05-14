@@ -17,7 +17,6 @@ Generate text summary stats
 \seealso{
 Other NLP Stats: 
 \code{\link{LexicalDiversity}()},
-\code{\link{N_Grams}()},
 \code{\link{Readability}()},
 \code{\link{Sentiment}()},
 \code{\link{TextColsDistance}()},

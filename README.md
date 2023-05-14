@@ -29,8 +29,6 @@ devtools::install_github("AdrianAntico/AutoNLP", upgrade = FALSE)
 
 ##### Sentiment()
 
-##### NGram()
-
 ##### Readability()
 
 ##### LexicalDiversity()
@@ -134,39 +132,6 @@ dt <- AutoNLP::Sentiment(
  
 Stuff here
  
-</p>
-</details>
-
-
-
-#### **NGram()**
-
-<details><summary>Code Example</summary>
-<p>
-
-```r
-# Data
-dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
-
-# Run Function
-dt <- AutoNLP::N_Grams(
-  dt,
-  dt_type = "raw",
-  TextColumns = "Comment",
-  IDcols = c("Factor_1", "Factor_2"),
-  N = 2,
-  StopWords = "en",
-  StopWordsSource = 'stopwords-iso')
-```
-
-</p>
-</details>
-
-<details><summary>Function Description</summary>
-<p>
- 
-Stuff here
-
 </p>
 </details>
 
