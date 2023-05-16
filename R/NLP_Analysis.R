@@ -160,12 +160,13 @@ Readability <- function(dt,
 #' @family NLP Stats
 #'
 #' @param dt data.table
-#' @param Measures Default is "TTR". Also available "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR", "MSTTR", "all"
+#' @param Measures Default is "TTR". Also available "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR", "MSTTR"
 #' @param TextColumns Names of text columns to analyze
 #' @param RemoveHyphens Logical
 #' @param RemoveSymbols Logical
 #' @param RemovePunctuation Logical
 #' @param RemoveNumbers Logical
+#' @param LogBase Default 10
 #' @param MATTR_Window Numeric value defining the size of the moving average window for computation of the Moving-Average Type-Token Ration
 #' @param MSTTR_Segment Numeric value defining the size of each segment for the computation of the Mean Segmental Type-Token Ratio
 #'
@@ -183,8 +184,8 @@ LexicalDiversity <- function(dt,
 
   library(quanteda)
   for(tc in TextColumns) {# tc = "Comment"
-    for(m in Measures) {# m = "CTTR"
-      dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
+    for(m in Measures) {# m = "TTR"
+      dt <- tryCatch({dt[, paste0(tc, " ", m, " ", "LexicalDiversity") := quanteda.textstats::textstat_lexdiv(
         quanteda::tokens(dt[[tc]]),
         measure = m,
         remove_numbers = RemoveNumbers,
@@ -193,7 +194,7 @@ LexicalDiversity <- function(dt,
         remove_hyphens = RemoveHyphens,
         log.base = LogBase,
         MATTR_window = MATTR_Window,
-        MSTTR_segment = MSTTR_Segment)[[2L]]]
+        MSTTR_segment = MSTTR_Segment)[[2L]]]}, error = function(x) dt)
     }
   }
   return(dt)
