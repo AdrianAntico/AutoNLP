@@ -31,8 +31,6 @@ devtools::install_github("AdrianAntico/AutoNLP", upgrade = FALSE)
 
 ##### LexicalDiversity()
 
-##### TextColsSimilarity()
-
 ## Code Examples
 
 #### **TextSummary()**
@@ -163,34 +161,4 @@ Stuff here
 </p>
 </details>
 
-
-
-#### **TextColsSimilarity()**
-
-<details><summary>Code Example</summary>
-<p>
-
-```r
-# Data
-dt <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
-dt2 <- AutoNLP::FakeDataGenerator(N = 1000, AddComment = TRUE)
-dt[, Comment2 := dt2$Comment]
-
-# Run Function
-dt <- AutoNLP::TextColsSimilarity(
-  dt,
-  TextCol1 = "Comment",
-  TextCol2 = "Comment2")
-```
-
-</p>
-</details>
-
-<details><summary>Function Description</summary>
-<p>
-
-Stuff here
-
-</p>
-</details>
 

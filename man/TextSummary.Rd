@@ -18,9 +18,7 @@ Generate text summary stats
 Other NLP Stats: 
 \code{\link{LexicalDiversity}()},
 \code{\link{Readability}()},
-\code{\link{Sentiment}()},
-\code{\link{TextColsDistance}()},
-\code{\link{TextColsSimilarity}()}
+\code{\link{Sentiment}()}
 }
 \author{
 Adrian Antico

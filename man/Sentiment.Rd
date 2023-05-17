@@ -38,8 +38,6 @@ Generate readability stats
 Other NLP Stats: 
 \code{\link{LexicalDiversity}()},
 \code{\link{Readability}()},
-\code{\link{TextColsDistance}()},
-\code{\link{TextColsSimilarity}()},
 \code{\link{TextSummary}()}
 }
 \author{

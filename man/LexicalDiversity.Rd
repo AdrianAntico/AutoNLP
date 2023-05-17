@@ -22,7 +22,7 @@ LexicalDiversity(
 
 \item{TextColumns}{Names of text columns to analyze}
 
-\item{Measures}{Default is "TTR". Also available "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR", "MSTTR", "all"}
+\item{Measures}{Default is "TTR". Also available "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "MATTR", "MSTTR"}
 
 \item{RemoveSymbols}{Logical}
 
@@ -31,6 +31,8 @@ LexicalDiversity(
 \item{RemovePunctuation}{Logical}
 
 \item{RemoveNumbers}{Logical}
+
+\item{LogBase}{Default 10}
 
 \item{MATTR_Window}{Numeric value defining the size of the moving average window for computation of the Moving-Average Type-Token Ration}
 
@@ -43,8 +45,6 @@ Generate lexical divrsity stats
 Other NLP Stats: 
 \code{\link{Readability}()},
 \code{\link{Sentiment}()},
-\code{\link{TextColsDistance}()},
-\code{\link{TextColsSimilarity}()},
 \code{\link{TextSummary}()}
 }
 \author{
